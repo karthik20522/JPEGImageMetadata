@@ -1,7 +1,7 @@
 XMP/IPTC/EXIF Metadata Extractor
 ==================
 
-Extract EXIF, IPTC and XMP data from JPEG image. This is a modified version of the original EXIF.js project from https://github.com/jseidelin/exif-js
+Extract EXIF, IPTC and XMP metadata from JPEG image. This is a modified version of the original EXIF.js project from https://github.com/jseidelin/exif-js
 
 Usage
 
