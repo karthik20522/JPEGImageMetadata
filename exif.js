@@ -399,10 +399,22 @@ var EXIF = (function() {
                 var xmpEndIndex = xmpString.indexOf('xmpmeta>') + 8;
                 xmpString = xmpString.substring( xmpString.indexOf( '<x:xmpmeta' ), xmpEndIndex );
 
-                if(xmpString.indexOf('stEvt') > 0){
-                    var indexOfXmp = xmpString.indexOf('x:xmpmeta') + 10
-                    xmpString = xmpString.slice(0, indexOfXmp) + 'xmlns:stEvt="http://ns.adobe.com/xap/1.0/sType/ResourceEvent#" ' + xmpString.slice(indexOfXmp)                
-                }       
+                var indexOfXmp = xmpString.indexOf('x:xmpmeta') + 10
+                //Custom written s/w append xml without any namespace. Following are some of them.
+                //Without namespaces, XML is thought to be invalid by parsers
+                xmpString = xmpString.slice(0, indexOfXmp) 
+                            + 'xmlns:Iptc4xmpCore="http://iptc.org/std/Iptc4xmpCore/1.0/xmlns/" ' 
+                            + 'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '
+                            + 'xmlns:tiff="http://ns.adobe.com/tiff/1.0/" '
+                            + 'xmlns:plus="http://www.hacktoseeifthisworks.com/ks/did/this" '
+                            + 'xmlns:ext="http://www.gettyimages.com/xsltExtension/1.0" '
+                            + 'xmlns:exif="http://ns.adobe.com/exif/1.0/" '
+                            + 'xmlns:stEvt="http://www.hacktoseeifthisworks.com/ks/did/this" '
+                            + 'xmlns:stRef="http://www.hacktoseeifthisworks.com/ks/did/this" '
+                            + 'xmlns:crs="http://www.hacktoseeifthisworks.com/ks/did/this" '
+                            + 'xmlns:xapGImg="http://www.hacktoseeifthisworks.com/ks/did/this" '
+                            + 'xmlns:Iptc4xmpExt="http://iptc.org/std/Iptc4xmpExt/2008-02-29/" '
+                            + xmpString.slice(indexOfXmp)                       
 
                 var domDocument = dom.parseFromString( xmpString, 'text/xml' );
                 return xml2json(domDocument);
@@ -554,7 +566,21 @@ var EXIF = (function() {
         0x7A : 'captionWriter',
         0x69 : 'headline',
         0x74 : 'copyright',
-        0x0F : 'category'
+        0x0F : 'category',
+        0x67 : 'meid',
+        0x10 : 'imageRank',
+        0x65 : 'country',
+        0x73 : 'source',
+        0x5C : 'venue',
+        0x5a : 'city',
+        0x05 : 'objectName',
+        0x07 : 'editStatus',
+        0x14 : 'supplementalCategories',
+        0x64 : 'countryCode',
+        0x5f : 'state',
+        0x28 : 'specialInstructions',
+        0x65 : 'composition',
+        0x4b : 'objectCycle'
     };
     function readIPTCData(file, startOffset, sectionLength){
         var dataView = new DataView(file);
