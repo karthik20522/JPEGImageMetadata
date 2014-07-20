@@ -8,14 +8,14 @@ Usage
       <input id="file-input" type="file" />
       
       document.getElementById("file-input").onchange = function(e) {
-        EXIF.getData(e.target.files[0], function() {
-            var exifData = JSON.stringify(this.exifdata)
-            var iptcData = JSON.stringify(this.iptcdata)
-            var xmpData = JSON.stringify(this.xmpdata)
-    
-        var prettPrinter = "IPTC DATA: " + JSON.stringify(JSON.parse(iptcData),null,2) + 
-                       "\n\nXMP DATA: " + JSON.stringify(JSON.parse(xmpData),null,2) + 
-                       "\n\nEXIF DATA: " + JSON.stringify(JSON.parse(exifData),null,2);
+            EXIF.getData(e.target.files[0], function() {
+                  var exifData = JSON.stringify(this.exifdata, null, 2)
+                  var iptcData = JSON.stringify(this.iptcdata, null, 2)
+                  var xmpData = JSON.stringify(this.xmpdata, null, 2)
+
+            var prettPrinter = "IPTC DATA: " + iptcData +
+                   "\n\nXMP DATA: " + xmpData +
+                   "\n\nEXIF DATA: " + exifData;
     
             document.getElementById('data').innerHTML = prettPrinter;          
         });
